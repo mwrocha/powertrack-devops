@@ -4,29 +4,65 @@ import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "ALERT")
+@Table(name = "ALERTS")
 public class Alert {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "MESSAGE")
-    private String message;
-
-    @Column(name = "CREATED_AT")
-    private OffsetDateTime createdAt;
+    @Column(name = "ALERT_ID")
+    private Long alertId;
 
     @ManyToOne
     @JoinColumn(name = "EQUIPMENT_ID")
     private Equipment equipment;
 
-    // getters / setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
-    public OffsetDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
-    public Equipment getEquipment() { return equipment; }
-    public void setEquipment(Equipment equipment) { this.equipment = equipment; }
+    @Column(name = "ALERT_TYPE")
+    private String alertType;
+
+    @Column(name = "ALERT_MESSAGE")
+    private String alertMessage;
+
+    @Column(name = "ALERT_TIMESTAMP")
+    private OffsetDateTime alertTimestamp;
+
+    // Getters e Setters
+    public Long getAlertId() {
+        return alertId;
+    }
+
+    public void setAlertId(Long alertId) {
+        this.alertId = alertId;
+    }
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
+    }
+
+    public String getAlertType() {
+        return alertType;
+    }
+
+    public void setAlertType(String alertType) {
+        this.alertType = alertType;
+    }
+
+    public String getAlertMessage() {
+        return alertMessage;
+    }
+
+    public void setAlertMessage(String alertMessage) {
+        this.alertMessage = alertMessage;
+    }
+
+    public OffsetDateTime getAlertTimestamp() {
+        return alertTimestamp;
+    }
+
+    public void setAlertTimestamp(OffsetDateTime alertTimestamp) {
+        this.alertTimestamp = alertTimestamp;
+    }
 }

@@ -18,6 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/meter-readings")
 public class MeterReadingController {
+
     private final MeterReadingService service;
     private final EquipmentRepository equipmentRepo;
     private final EnergyMeterRepository meterRepo;
@@ -38,19 +39,21 @@ public class MeterReadingController {
     @PostMapping
     @PreAuthorize("hasAnyRole('USER','OPERATOR')")
     public ResponseEntity<?> create(@Valid @RequestBody Map<String, Object> payload) {
-        // payload expected: { "meterId": 1, "equipmentId": 1, "valueKwh": 2.5 }
+        // Espera payload: { "meterId": 1, "equipmentId": 1, "energyKwh": 2.5 }
         Long meterId = Long.valueOf(payload.get("meterId").toString());
         Long equipmentId = Long.valueOf(payload.get("equipmentId").toString());
-        Double valueKwh = Double.valueOf(payload.get("valueKwh").toString());
+        Double energyKwh = Double.valueOf(payload.get("energyKwh").toString());
 
-        EnergyMeter meter = meterRepo.findById(meterId).orElseThrow(() -> new RuntimeException("Meter not found: " + meterId));
-        Equipment eq = equipmentRepo.findById(equipmentId).orElseThrow(() -> new RuntimeException("Equipment not found: " + equipmentId));
+        EnergyMeter meter = meterRepo.findById(meterId)
+                .orElseThrow(() -> new RuntimeException("Meter not found: " + meterId));
+        Equipment eq = equipmentRepo.findById(equipmentId)
+                .orElseThrow(() -> new RuntimeException("Equipment not found: " + equipmentId));
 
         MeterReading mr = new MeterReading();
         mr.setMeter(meter);
         mr.setEquipment(eq);
-        mr.setValueKwh(valueKwh);
-        mr.setReadingDate(OffsetDateTime.now());
+        mr.setEnergyKwh(energyKwh);
+        mr.setReadingTimestamp(OffsetDateTime.now());
 
         MeterReading created = service.create(mr);
         return ResponseEntity.status(201).body(created);

@@ -6,9 +6,11 @@ import java.time.OffsetDateTime;
 @Entity
 @Table(name = "METER_READING")
 public class MeterReading {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "READING_ID")
+    private Long readingId;
 
     @ManyToOne
     @JoinColumn(name = "METER_ID")
@@ -18,21 +20,61 @@ public class MeterReading {
     @JoinColumn(name = "EQUIPMENT_ID")
     private Equipment equipment;
 
-    @Column(name = "READING_DATE")
-    private OffsetDateTime readingDate;
+    @Column(name = "READING_TIMESTAMP")
+    private OffsetDateTime readingTimestamp;
 
-    @Column(name = "VALUE_KWH")
-    private Double valueKwh;
+    @Column(name = "ENERGY_KWH")
+    private Double energyKwh;
 
-    // getters / setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public EnergyMeter getMeter() { return meter; }
-    public void setMeter(EnergyMeter meter) { this.meter = meter; }
-    public Equipment getEquipment() { return equipment; }
-    public void setEquipment(Equipment equipment) { this.equipment = equipment; }
-    public OffsetDateTime getReadingDate() { return readingDate; }
-    public void setReadingDate(OffsetDateTime readingDate) { this.readingDate = readingDate; }
-    public Double getValueKwh() { return valueKwh; }
-    public void setValueKwh(Double valueKwh) { this.valueKwh = valueKwh; }
+    @Column(name = "POWER_KW")
+    private Double powerKw;
+
+    // Getters e Setters
+    public Long getReadingId() {
+        return readingId;
+    }
+
+    public void setReadingId(Long readingId) {
+        this.readingId = readingId;
+    }
+
+    public EnergyMeter getMeter() {
+        return meter;
+    }
+
+    public void setMeter(EnergyMeter meter) {
+        this.meter = meter;
+    }
+
+    public Equipment getEquipment() {
+        return equipment;
+    }
+
+    public void setEquipment(Equipment equipment) {
+        this.equipment = equipment;
+    }
+
+    public OffsetDateTime getReadingTimestamp() {
+        return readingTimestamp;
+    }
+
+    public void setReadingTimestamp(OffsetDateTime readingTimestamp) {
+        this.readingTimestamp = readingTimestamp;
+    }
+
+    public Double getEnergyKwh() {
+        return energyKwh;
+    }
+
+    public void setEnergyKwh(Double energyKwh) {
+        this.energyKwh = energyKwh;
+    }
+
+    public Double getPowerKw() {
+        return powerKw;
+    }
+
+    public void setPowerKw(Double powerKw) {
+        this.powerKw = powerKw;
+    }
 }

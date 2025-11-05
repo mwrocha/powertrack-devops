@@ -1,32 +1,34 @@
 package br.com.powertrack.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "EQUIPMENT")
 public class Equipment {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipment_seq")
+    @SequenceGenerator(
+            name = "equipment_seq",
+            sequenceName = "RM560523.EQUIPMENT_SEQ", // 🔥 adicione o schema aqui
+            allocationSize = 1
+    )
+    @Column(name = "EQUIPMENT_ID")
     private Long id;
 
-    @NotBlank
-    @Column(name="NAME", nullable = false)
+    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name="TYPE")
-    private String type;
-
-    @Column(name="LOCATION")
+    @Column(name = "LOCATION")
     private String location;
 
-    // getters and setters
+    // getters e setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
+
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
 }

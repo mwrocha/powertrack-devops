@@ -11,7 +11,7 @@
 
     <name>PowerTrack</name>
 
-    <!-- ✅ PARENT: define o Spring Boot como base -->
+    <!-- PARENT: define o Spring Boot como base -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -24,7 +24,7 @@
     </properties>
 
     <dependencies>
-        <!-- 🌐 Web -->
+        <!-- Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -37,19 +37,19 @@
 
 
 
-        <!-- 🗃️ JPA -->
+        <!-- JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- 🔐 Segurança -->
+        <!-- Segurança -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- 🧩 Banco de Dados Oracle -->
+        <!-- Banco de Dados Oracle -->
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
             <artifactId>ojdbc11</artifactId>
@@ -60,7 +60,7 @@
             <artifactId>ojdbc11</artifactId>
         </dependency>
 
-        <!-- 🪶 Flyway (migrações de banco) -->
+        <!-- Flyway (migrações de banco) -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -71,14 +71,14 @@
             <artifactId>flyway-database-oracle</artifactId>
         </dependency>
 
-        <!-- 💡 Lombok (facilita getters/setters e construtores) -->
+        <!-- Lombok (facilita getters/setters e construtores) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
-        <!-- 🧪 Testes -->
+        <!-- Testes -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -88,7 +88,7 @@
 
     <build>
         <plugins>
-            <!-- 🚀 Plugin do Spring Boot -->
+            <!-- Plugin do Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

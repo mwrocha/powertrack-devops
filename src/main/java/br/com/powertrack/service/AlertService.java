@@ -9,13 +9,22 @@ import java.util.List;
 
 @Service
 public class AlertService {
+
     private final AlertRepository repo;
-    public AlertService(AlertRepository repo) { this.repo = repo; }
+
+    public AlertService(AlertRepository repo) {
+        this.repo = repo;
+    }
 
     public Alert create(Alert a) {
-        if (a.getCreatedAt() == null) a.setCreatedAt(OffsetDateTime.now());
+        // Garante que o timestamp será preenchido automaticamente, se não vier do frontend
+        if (a.getAlertTimestamp() == null) {
+            a.setAlertTimestamp(OffsetDateTime.now());
+        }
         return repo.save(a);
     }
 
-    public List<Alert> listAll() { return repo.findAll(); }
+    public List<Alert> listAll() {
+        return repo.findAll();
+    }
 }
