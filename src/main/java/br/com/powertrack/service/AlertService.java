@@ -17,7 +17,7 @@ public class AlertService {
     }
 
     public Alert create(Alert a) {
-        // Garante que o timestamp será preenchido automaticamente, se não vier do frontend
+        // Garante que o timestamp será preenchido
         if (a.getAlertTimestamp() == null) {
             a.setAlertTimestamp(OffsetDateTime.now());
         }
@@ -27,4 +27,6 @@ public class AlertService {
     public List<Alert> listAll() {
         return repo.findAll();
     }
+
+
 }

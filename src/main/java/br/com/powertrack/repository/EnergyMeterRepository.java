@@ -4,7 +4,6 @@ import br.com.powertrack.model.EnergyMeter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository // Boa prática adicionar
+@Repository
 public interface EnergyMeterRepository extends JpaRepository<EnergyMeter, Long> {
-    // Spring Data JPA cria o findById, findAll, save, etc. para você
 }

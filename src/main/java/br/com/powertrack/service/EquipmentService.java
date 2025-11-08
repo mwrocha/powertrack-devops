@@ -14,6 +14,6 @@ public class EquipmentService {
     public List<Equipment> listAll() { return repo.findAll(); }
     public Equipment create(Equipment e) { return repo.save(e); }
     public Equipment findById(Long id) {
-        return repo.findById(id).orElseThrow(() -> new RuntimeException("Equipment not found: " + id));
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("Equipamento não encontrado: " + id));
     }
 }

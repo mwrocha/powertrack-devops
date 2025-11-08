@@ -37,7 +37,7 @@ public class MeterReadingController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('USER','OPERATOR')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<?> create(@Valid @RequestBody Map<String, Object> payload) {
         // Espera payload: { "meterId": 1, "equipmentId": 1, "energyKwh": 2.5 }
         Long meterId = Long.valueOf(payload.get("meterId").toString());
@@ -63,4 +63,6 @@ public class MeterReadingController {
     public ResponseEntity<List<MeterReading>> byEquipment(@PathVariable Long equipmentId) {
         return ResponseEntity.ok(service.findByEquipment(equipmentId));
     }
+
+
 }

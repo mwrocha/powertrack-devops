@@ -17,6 +17,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
-        return ResponseEntity.badRequest().body(Map.of("error", "Parametro invalido: " + ex.getName()));
+        return ResponseEntity.badRequest().body(Map.of("error", "Parâmetro invalido: " + ex.getName()));
     }
 }

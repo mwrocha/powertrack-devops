@@ -10,7 +10,7 @@ public class Equipment {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipment_seq")
     @SequenceGenerator(
             name = "equipment_seq",
-            sequenceName = "RM560523.EQUIPMENT_SEQ", // 🔥 adicione o schema aqui
+            sequenceName = "RM560523.EQUIPMENT_SEQ",
             allocationSize = 1
     )
     @Column(name = "EQUIPMENT_ID")

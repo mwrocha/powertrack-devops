@@ -30,7 +30,7 @@ public class AlertController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('OPERATOR')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody Map<String, Object> payload) {
         Long equipmentId = Long.valueOf(payload.get("equipmentId").toString());
         String message = payload.get("message").toString();

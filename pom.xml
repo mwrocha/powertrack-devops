@@ -71,7 +71,7 @@
             <artifactId>flyway-database-oracle</artifactId>
         </dependency>
 
-        <!-- Lombok (facilita getters/setters e construtores) -->
+        <!-- Lombok (getters/setters e construtores) -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

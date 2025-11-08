@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
-    // Métodos findById, findAll, save, etc. também serão criados aqui
 }

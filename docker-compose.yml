@@ -1,4 +1,37 @@
+#services:
+#  oracle-db:
+#    image: gvenzl/oracle-xe:18.4.0
+#    environment:
+#      ORACLE_PASSWORD: 12345
+#      ORACLE_PDB: XEPDB1
+#    ports:
+#      - "1521:1521"
+#    volumes:
+#      - oracle-data:/opt/oracle/oradata
+#    healthcheck:
+#      test: ["CMD", "sqlplus", "-s", "system/12345@//localhost:1521/XEPDB1", "<<<", "SELECT 1 FROM DUAL;"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 5
+#    restart: unless-stopped
+#
+#  powertrack-app:
+#    build: .
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle-db:1521/XEPDB1
+#      SPRING_DATASOURCE_USERNAME: system
+#      SPRING_DATASOURCE_PASSWORD: 12345
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      oracle-db:
+#        condition: service_healthy
+#
+#volumes:
+#  oracle-data:
+
 version: '3.8'
+
 services:
   oracle-db:
     image: gvenzl/oracle-xe:18.4.0
@@ -10,15 +43,21 @@ services:
     volumes:
       - oracle-data:/opt/oracle/oradata
     healthcheck:
-      test: ["CMD","/bin/sh","-c","echo 'SELECT 1 FROM DUAL;' | sqlplus -s system/${ORACLE_PASSWORD}@//localhost:1521/XE || exit 1"]
+      test: ["CMD-SHELL", "echo 'SELECT 1 FROM DUAL;' | sqlplus -s system/12345@//localhost:1521/XEPDB1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     restart: unless-stopped
 
   powertrack-app:
     build: .
     environment:
-      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL
-      SPRING_DATASOURCE_USERNAME: rm560523
-      SPRING_DATASOURCE_PASSWORD: 1505944
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle-db:1521/XEPDB1
+      SPRING_DATASOURCE_USERNAME: system
+      SPRING_DATASOURCE_PASSWORD: 12345
+      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_FLYWAY_LOCATIONS: classpath:db/migration
+      SPRING_FLYWAY_BASELINE_ON_MIGRATE: "true"
     ports:
       - "8080:8080"
     depends_on:

@@ -19,27 +19,12 @@ public class EnergyMeter {
     private LocalDate installationDate;
 
     // Getters e Setters
-    public Long getMeterId() {
-        return meterId;
-    }
+    public Long getMeterId() { return meterId; }
+    public void setMeterId(Long meterId) { this.meterId = meterId; }
 
-    public void setMeterId(Long meterId) {
-        this.meterId = meterId;
-    }
+    public String getSerialNumber() { return serialNumber; }
+    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
 
-    public String getSerialNumber() {
-        return serialNumber;
-    }
-
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
-    public LocalDate getInstallationDate() {
-        return installationDate;
-    }
-
-    public void setInstallationDate(LocalDate installationDate) {
-        this.installationDate = installationDate;
-    }
+    public LocalDate getInstallationDate() { return installationDate; }
+    public void setInstallationDate(LocalDate installationDate) { this.installationDate = installationDate; }
 }
