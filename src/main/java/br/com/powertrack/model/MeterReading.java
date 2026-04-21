@@ -20,7 +20,6 @@ public class MeterReading {
     private Double energyKwh;
     private Double powerKw;
 
-    // Campo opcional para mostrar flexibilidade (ótimo para o trabalho)
     private String source; // "IOT", "MANUAL", "SIMULATED"
 
     // Getters e Setters

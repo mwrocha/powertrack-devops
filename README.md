@@ -1,6 +1,10 @@
-# PowerTrack — ESG Monitoramento de Energia
+# Projeto - PowerTrack ESG
 
-> Plataforma de monitoramento de consumo energético voltada a práticas ESG (Environmental, Social and Governance). Permite registrar leituras de medidores, alertas de consumo excessivo e gestão de equipamentos industriais.
+> **PowerTrack** é uma API REST desenvolvida em Java 21 com Spring Boot 3.3.4 para monitoramento de consumo energético de equipamentos industriais, contribuindo com práticas de **ESG (Environmental, Social and Governance)**. O projeto integra práticas completas de DevOps com pipeline CI/CD, containerização e orquestração.
+
+**Integrante:** Mayke Rocha  
+**Repositório:** https://github.com/mwrocha/powertrack-devops  
+**Disciplina:** Navegando pelo Mundo DevOps — FIAP 2025
 
 ---
 
@@ -15,27 +19,17 @@
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/powertrack.git
-cd powertrack
+git clone https://github.com/mwrocha/powertrack-devops.git
+cd powertrack-devops
 
-# 2. Crie o arquivo de variáveis de ambiente
-cp .env.example .env
-# Edite o .env com suas credenciais se necessário
+# 2. Suba os containers
+docker-compose up -d
 
-# 3. Suba o ambiente de staging (padrão)
-docker-compose up -d --build
+# 3. Verifique se os containers estão rodando
+docker ps
 
-# 4. Verifique os logs
-docker-compose logs -f powertrack-app
-
-# 5. Acesse a API
+# 4. Acesse o health check
 curl http://localhost:8080/actuator/health
-```
-
-### Subir ambiente de Produção
-
-```bash
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 ```
 
 ### Endpoints disponíveis
@@ -43,65 +37,64 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 | Método | Endpoint | Autenticação | Descrição |
 |--------|----------|-------------|-----------|
 | GET | `/api/meter-readings` | Básica | Lista todas as leituras |
-| POST | `/api/meter-readings` | USER / ADMIN | Registra nova leitura |
-| GET | `/api/meter-readings/by-equipment/{id}` | Básica | Leituras por equipamento |
-| GET | `/api/equipment` | USER / ADMIN | Lista equipamentos |
-| POST | `/api/equipment` | USER / ADMIN | Cadastra equipamento |
-| GET | `/api/energy-meter` | USER / ADMIN | Lista medidores |
-| POST | `/api/energy-meter` | USER / ADMIN | Cadastra medidor |
-| GET | `/api/alerts` | USER / ADMIN | Lista alertas |
-| POST | `/api/alerts` | ADMIN | Cria alerta |
+| POST | `/api/meter-readings` | Básica | Registra nova leitura |
+| GET | `/api/equipment` | Básica | Lista equipamentos |
+| POST | `/api/equipment` | Básica | Cadastra equipamento |
+| GET | `/api/energy-meter` | Básica | Lista medidores |
+| GET | `/api/alerts` | Básica | Lista alertas |
 | GET | `/actuator/health` | Público | Health check |
 
 **Autenticação Basic Auth:**
-- Usuário: `admin` / Senha: `123` (ROLE_ADMIN)
-- Usuário: `user` / Senha: `123` (ROLE_USER)
+- Usuário: `admin` / Senha: `123`
+- Usuário: `user` / Senha: `123`
+
+### Resetar o ambiente
+
+```bash
+docker-compose down
+docker volume rm powertrack_mongo-data
+docker-compose up -d
+```
 
 ---
 
 ## Pipeline CI/CD
 
-### Ferramenta utilizada: Azure DevOps
+### Ferramenta utilizada: GitHub Actions
 
-O pipeline está definido em `.azure/pipelines/azure-pipelines.yml` e é acionado automaticamente em push para as branches `main` e `develop`.
+O pipeline está definido em `.github/workflows/pipeline.yml` e é acionado automaticamente em todo push para as branches `main` e `develop`.
 
 ### Etapas do Pipeline
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  STAGE 1 — Build & Testes (branch: develop + main)      │
-│  ┌──────────────┐  ┌──────────────┐  ┌───────────────┐  │
-│  │ Cache Maven  │→ │  Maven Build │→ │  Maven Test   │  │
-│  └──────────────┘  └──────────────┘  └───────────────┘  │
-│                          ↓                              │
-│                   Docker Build Image                    │
-│                   Publish JAR Artifact                  │
-└─────────────────────────────────────────────────────────┘
-              ↓ (apenas branch develop)
-┌─────────────────────────────────────────────────────────┐
-│  STAGE 2 — Deploy Staging                               │
-│  ┌─────────────┐  ┌────────────────┐  ┌─────────────┐  │
-│  │  Gerar .env │→ │ Compose Up     │→ │ Health Check│  │
-│  │  (staging)  │  │ (staging)      │  │ :8080       │  │
-│  └─────────────┘  └────────────────┘  └─────────────┘  │
-└─────────────────────────────────────────────────────────┘
-              ↓ (apenas branch main + aprovação manual)
-┌─────────────────────────────────────────────────────────┐
-│  STAGE 3 — Deploy Produção                              │
-│  ┌─────────────┐  ┌────────────────┐  ┌─────────────┐  │
-│  │  Gerar .env │→ │ Compose Up     │→ │ Health Check│  │
-│  │  (prod)     │  │ (prod)         │  │ :80         │  │
-│  └─────────────┘  └────────────────┘  └─────────────┘  │
-└─────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│  Job 1 — Build e Testes                 │
+│  Configurar Java 21                     │
+│  → mvn clean package                   │
+│  → mvn test                            │
+│  → docker build                        │
+│  → Publicar JAR como artefato          │
+└─────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────┐
+│  Job 2 — Deploy Staging                 │
+│  Docker Compose Up (staging)            │
+│  → Health Check :8080                  │
+└─────────────────────────────────────────┘
+              ↓
+┌─────────────────────────────────────────┐
+│  Job 3 — Deploy Produção                │
+│  Docker Compose Up (produção)           │
+│  → Health Check :80                    │
+└─────────────────────────────────────────┘
 ```
 
-### Lógica de branches
+### Resultado do Pipeline
 
-| Branch | Stage executado |
-|--------|----------------|
-| `develop` | Build + Testes + Deploy Staging |
-| `main` | Build + Testes + Deploy Staging + Deploy Produção (com aprovação manual) |
-| Pull Request | Build + Testes apenas |
+O pipeline executa com sucesso em aproximadamente 5 minutos:
+- **Build e Testes:** 1m 13s ✅
+- **Deploy Staging:** 1m 52s ✅
+- **Deploy Produção:** 1m 45s ✅
 
 ---
 
@@ -130,11 +123,15 @@ ENV SPRING_PROFILES_ACTIVE=docker
 ENTRYPOINT ["java", "-jar", "app.jar"]
 ```
 
-**Estratégias adotadas:**
-- **Multi-stage build**: imagem final ~220 MB (sem Maven/JDK, só JRE)
-- **Cache de dependências**: `dependency:go-offline` em layer separado
-- **Usuário não-root**: segurança por boas práticas
-- **Variáveis de ambiente**: configuração externalizada via `.env`
+### Estratégias adotadas
+
+| Estratégia | Benefício |
+|-----------|-----------|
+| Multi-stage build | Imagem final sem Maven/JDK — apenas JRE (~220 MB) |
+| Cache de dependências | Layer separado para pom.xml — rebuild mais rápido |
+| Usuário não-root | Segurança: processo roda como usuário `powertrack` |
+| ENV externalizado | Configuração via variáveis de ambiente |
+| Health check | Docker verifica `/actuator/health` antes de considerar container pronto |
 
 ### Docker Compose — Serviços
 
@@ -145,27 +142,50 @@ services:
 ```
 
 **Recursos utilizados:**
-- **Volumes**: `mongo-data` para persistência do banco
-- **Redes**: `powertrack-network` isolando os serviços
-- **Health checks**: MongoDB e App com verificação ativa
-- **Variáveis de ambiente**: injetadas via `.env`
-- **Override files**: `docker-compose.staging.yml` e `docker-compose.prod.yml`
+- **Volumes:** `mongo-data` para persistência do banco
+- **Redes:** `powertrack-network` isolando os serviços
+- **Health checks:** MongoDB e App com verificação ativa
+- **Variáveis de ambiente:** injetadas via `.env`
 
 ---
 
 ## Prints do Funcionamento
 
-> Adicione aqui prints ou links de evidências após executar o projeto:
+### 1. Containers rodando
 
-**Sugestão de evidências a capturar:**
+![docker ps](prints/docker-ps.png)
 
-1. `docker-compose up` — containers subindo
-2. `docker ps` — containers rodando
-3. `GET /actuator/health` — resposta `{"status":"UP"}`
-4. `GET /api/equipment` — listagem de equipamentos
-5. `POST /api/meter-readings` — criação de leitura
-6. Pipeline Azure DevOps — stages Build, Staging e Produção
-7. Logs do container: `docker logs powertrack-app`
+Dois containers saudáveis: `powertrack-app` (porta 8080) e `powertrack-mongodb` (porta 27017).
+
+### 2. Docker Compose Up
+
+![docker-compose up](prints/docker-compose-up.png)
+
+Containers `powertrack-mongodb` e `powertrack-app` iniciados com sucesso.
+
+### 3. Health Check — Aplicação UP
+
+![actuator health](prints/actuator-health.png)
+
+Endpoint `/actuator/health` retornando `status: UP` com MongoDB conectado.
+
+### 4. API funcionando com autenticação
+
+![api equipment 200](prints/api-equipment-200.png)
+
+`GET /api/equipment` com Basic Auth retornando `200 OK` com a lista de equipamentos.
+
+### 5. Autenticação bloqueando acesso sem credenciais
+
+![api equipment 401](prints/api-equipment-401.png)
+
+`GET /api/equipment` sem autenticação retornando `401 Unauthorized`.
+
+### 6. Pipeline CI/CD — Todos os stages verdes
+
+![pipeline github actions](prints/pipeline-success.png)
+
+Pipeline com 3 stages executados com sucesso: Build e Testes → Deploy Staging → Deploy Produção.
 
 ---
 
@@ -181,8 +201,9 @@ services:
 | Maven | 3.9 | Build e dependências |
 | Docker | 24+ | Containerização |
 | Docker Compose | v2 | Orquestração local |
-| Azure DevOps | — | Pipeline CI/CD |
-| Eclipse Temurin | 21-JRE | Runtime Java (imagem final) |
+| GitHub Actions | — | Pipeline CI/CD |
+| Eclipse Temurin | 21-JRE | Runtime Java na imagem final |
+| Flapdoodle Embed MongoDB | 4.12.0 | MongoDB em memória para testes |
 
 ---
 
@@ -191,9 +212,9 @@ services:
 | Item | Status |
 |------|--------|
 | Projeto compactado em .ZIP com estrutura organizada | ✅ |
-| Dockerfile funcional (multi-stage build) | ✅ |
+| Dockerfile funcional (Multi-Stage Build) | ✅ |
 | docker-compose.yml com MongoDB + App | ✅ |
-| Pipeline Azure DevOps com Build, Teste e Deploy | ✅ |
+| Pipeline com etapas de Build, Teste e Deploy | ✅ |
 | README.md com instruções e prints | ✅ |
-| Documentação técnica (PDF) | ✅ |
+| Documentação técnica com evidências (PDF) | ✅ |
 | Deploy realizado nos ambientes staging e produção | ✅ |

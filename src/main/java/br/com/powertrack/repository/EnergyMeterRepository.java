@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EnergyMeterRepository extends MongoRepository<EnergyMeter, String> {
 
-    // opcional (pode ser útil para seu CRUD)
     EnergyMeter findBySerialNumber(String serialNumber);
 
 }

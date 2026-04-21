@@ -9,7 +9,7 @@ import java.time.OffsetDateTime;
 public class Alert {
 
     @Id
-    private String id; // MongoDB ObjectId em forma de String
+    private String id; // MongoDB  String
 
     private String equipmentId; // referência ao Equipment (id do equipamento)
 

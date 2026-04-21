@@ -9,10 +9,8 @@ import java.util.List;
 @Repository
 public interface MeterReadingRepository extends MongoRepository<MeterReading, String> {
 
-    // Busca por equipamento
     List<MeterReading> findByEquipmentId(String equipmentId);
 
-    // Opcional: busca por medidor
     List<MeterReading> findByMeterId(String meterId);
 
 }

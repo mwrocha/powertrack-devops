@@ -40,7 +40,7 @@ public class MeterReadingController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<?> create(@Valid @RequestBody Map<String, Object> payload) {
 
-        // Agora ID é String (Mongo ObjectId)
+        // String (Mongo ObjectId)
         String meterId = payload.get("meterId").toString();
         String equipmentId = payload.get("equipmentId").toString();
         Double energyKwh = Double.valueOf(payload.get("energyKwh").toString());

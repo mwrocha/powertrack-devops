@@ -9,7 +9,6 @@ import java.util.List;
 @Repository
 public interface EquipmentRepository extends MongoRepository<Equipment, String> {
 
-    // opcional: útil para buscas específicas
     List<Equipment> findByLocation(String location);
 
     List<Equipment> findByNameContainingIgnoreCase(String name);

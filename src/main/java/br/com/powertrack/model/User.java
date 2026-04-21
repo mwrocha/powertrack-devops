@@ -20,7 +20,6 @@ public class User {
     // Ex.: "ROLE_USER" / "ROLE_ADMIN"
     private String role;
 
-    // opcional (ajuda no trabalho e auditoria)
     private OffsetDateTime createdAt;
 
     // Getters e setters
