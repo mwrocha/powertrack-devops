@@ -49,16 +49,14 @@ jobs:
       - name: Checkout do codigo
         uses: actions/checkout@v4
 
-      - name: Criar .env staging
-        run: |
-          echo "MONGO_USERNAME=powertrack" >> .env
-          echo "MONGO_PASSWORD=powertrack123" >> .env
-          echo "MONGO_DATABASE=powertrack" >> .env
-          echo "APP_PROFILE=staging" >> .env
-          echo "APP_PORT=8080" >> .env
-
       - name: Docker Compose Up Staging
-        run: docker compose up -d --build
+        run: |
+          MONGO_USERNAME=powertrack \
+          MONGO_PASSWORD=powertrack123 \
+          MONGO_DATABASE=powertrack \
+          APP_PROFILE=staging \
+          APP_PORT=8080 \
+          docker compose up -d --build
 
       - name: Health Check Staging
         run: |
@@ -76,17 +74,14 @@ jobs:
       - name: Checkout do codigo
         uses: actions/checkout@v4
 
-      - name: Criar .env producao
-        run: |
-          echo "MONGO_USERNAME=powertrack" >> .env
-          echo "MONGO_PASSWORD=powertrack123" >> .env
-          echo "MONGO_DATABASE=powertrack" >> .env
-          echo "APP_PROFILE=production" >> .env
-          echo "APP_PORT=80" >> .env
-
       - name: Docker Compose Up Producao
         run: |
-          docker compose -f docker compose.yml -f docker compose.prod.yml up -d --build
+          MONGO_USERNAME=powertrack \
+          MONGO_PASSWORD=powertrack123 \
+          MONGO_DATABASE=powertrack \
+          APP_PROFILE=production \
+          APP_PORT=80 \
+          docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
       - name: Health Check Producao
         run: |
