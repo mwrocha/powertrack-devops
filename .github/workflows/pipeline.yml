@@ -58,7 +58,7 @@ jobs:
           echo "APP_PORT=8080" >> .env
 
       - name: Docker Compose Up Staging
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
 
       - name: Health Check Staging
         run: |
@@ -86,7 +86,7 @@ jobs:
 
       - name: Docker Compose Up Producao
         run: |
-          docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+          docker compose -f docker compose.yml -f docker compose.prod.yml up -d --build
 
       - name: Health Check Producao
         run: |
