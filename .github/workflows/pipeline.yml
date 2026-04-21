@@ -1,1 +1,94 @@
-mkdir .github\workflows
+name: PowerTrack CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    name: Build e Testes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build com Maven
+        run: mvn clean package -DskipTests
+
+      - name: Executar Testes
+        run: mvn test
+
+      - name: Build da imagem Docker
+        run: docker build -t powertrack:${{ github.sha }} .
+
+      - name: Publicar JAR como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: powertrack-jar
+          path: target/*.jar
+
+  deploy-staging:
+    name: Deploy Staging
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    environment: staging
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Criar .env staging
+        run: |
+          echo "MONGO_USERNAME=powertrack" >> .env
+          echo "MONGO_PASSWORD=powertrack123" >> .env
+          echo "MONGO_DATABASE=powertrack" >> .env
+          echo "APP_PROFILE=staging" >> .env
+          echo "APP_PORT=8080" >> .env
+
+      - name: Docker Compose Up Staging
+        run: docker-compose up -d --build
+
+      - name: Health Check Staging
+        run: |
+          sleep 40
+          curl -f http://localhost:8080/actuator/health
+
+  deploy-producao:
+    name: Deploy Producao
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    if: github.ref == 'refs/heads/main'
+    environment: producao
+
+    steps:
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
+
+      - name: Criar .env producao
+        run: |
+          echo "MONGO_USERNAME=powertrack" >> .env
+          echo "MONGO_PASSWORD=powertrack123" >> .env
+          echo "MONGO_DATABASE=powertrack" >> .env
+          echo "APP_PROFILE=production" >> .env
+          echo "APP_PORT=80" >> .env
+
+      - name: Docker Compose Up Producao
+        run: |
+          docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+
+      - name: Health Check Producao
+        run: |
+          sleep 40
+          curl -f http://localhost:80/actuator/health
