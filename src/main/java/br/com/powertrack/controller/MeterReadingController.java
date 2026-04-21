@@ -39,30 +39,31 @@ public class MeterReadingController {
     @PostMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<?> create(@Valid @RequestBody Map<String, Object> payload) {
-        // Espera payload: { "meterId": 1, "equipmentId": 1, "energyKwh": 2.5 }
-        Long meterId = Long.valueOf(payload.get("meterId").toString());
-        Long equipmentId = Long.valueOf(payload.get("equipmentId").toString());
+
+        // Agora ID é String (Mongo ObjectId)
+        String meterId = payload.get("meterId").toString();
+        String equipmentId = payload.get("equipmentId").toString();
         Double energyKwh = Double.valueOf(payload.get("energyKwh").toString());
 
         EnergyMeter meter = meterRepo.findById(meterId)
                 .orElseThrow(() -> new RuntimeException("Meter not found: " + meterId));
+
         Equipment eq = equipmentRepo.findById(equipmentId)
                 .orElseThrow(() -> new RuntimeException("Equipment not found: " + equipmentId));
 
         MeterReading mr = new MeterReading();
-        mr.setMeter(meter);
-        mr.setEquipment(eq);
+        mr.setMeterId(meter.getId());
+        mr.setEquipmentId(eq.getId());
         mr.setEnergyKwh(energyKwh);
         mr.setReadingTimestamp(OffsetDateTime.now());
+        mr.setSource("MANUAL"); // opcional (bom pro trabalho)
 
         MeterReading created = service.create(mr);
         return ResponseEntity.status(201).body(created);
     }
 
     @GetMapping("/by-equipment/{equipmentId}")
-    public ResponseEntity<List<MeterReading>> byEquipment(@PathVariable Long equipmentId) {
+    public ResponseEntity<List<MeterReading>> byEquipment(@PathVariable String equipmentId) {
         return ResponseEntity.ok(service.findByEquipment(equipmentId));
     }
-
-
 }

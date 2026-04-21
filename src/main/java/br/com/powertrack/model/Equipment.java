@@ -1,34 +1,39 @@
 package br.com.powertrack.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "EQUIPMENT")
+@Document(collection = "equipments")
 public class Equipment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "equipment_seq")
-    @SequenceGenerator(
-            name = "equipment_seq",
-            sequenceName = "RM560523.EQUIPMENT_SEQ",
-            allocationSize = 1
-    )
-    @Column(name = "EQUIPMENT_ID")
-    private Long id;
+    private String id; // Mongo gera ObjectId automaticamente
 
-    @Column(name = "NAME", nullable = false)
     private String name;
-
-    @Column(name = "LOCATION")
     private String location;
 
-    // getters e setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    // Getters e Setters
+    public String getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 }

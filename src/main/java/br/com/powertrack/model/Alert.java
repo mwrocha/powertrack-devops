@@ -1,45 +1,37 @@
 package br.com.powertrack.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.OffsetDateTime;
 
-@Entity
-@Table(name = "ALERTS")
+@Document(collection = "alerts")
 public class Alert {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ALERT_ID")
-    private Long alertId;
+    private String id; // MongoDB ObjectId em forma de String
 
-    @ManyToOne
-    @JoinColumn(name = "EQUIPMENT_ID")
-    private Equipment equipment;
+    private String equipmentId; // referência ao Equipment (id do equipamento)
 
-    @Column(name = "ALERT_TYPE")
     private String alertType;
-
-    @Column(name = "ALERT_MESSAGE")
     private String alertMessage;
-
-    @Column(name = "ALERT_TIMESTAMP")
     private OffsetDateTime alertTimestamp;
 
     // Getters e Setters
-    public Long getAlertId() {
-        return alertId;
+    public String getId() {
+        return id;
     }
 
-    public void setAlertId(Long alertId) {
-        this.alertId = alertId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Equipment getEquipment() {
-        return equipment;
+    public String getEquipmentId() {
+        return equipmentId;
     }
 
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
+    public void setEquipmentId(String equipmentId) {
+        this.equipmentId = equipmentId;
     }
 
     public String getAlertType() {

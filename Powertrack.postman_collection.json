@@ -1,0 +1,1419 @@
+{
+	"info": {
+		"_postman_id": "fbcd2813-baa9-4864-9327-c94ee5adb9c5",
+		"name": "Powertrack",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38440918"
+	},
+	"item": [
+		{
+			"name": "Leituras do medidor",
+			"item": [
+				{
+					"name": "Obter leitura no medidor",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"meterId\": 1,\r\n  \"equipmentId\": 1,\r\n  \"energyKwh\": 12.34\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}meter-readings",
+							"host": [
+								"{{api_url}}meter-readings"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Leituras do medidor com usuário sem autorização",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}meter-readings",
+									"host": [
+										"{{api_url}}meter-readings"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "WWW-Authenticate",
+									"value": "Basic realm=\"Realm\""
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:00:22 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-11-07T23:00:22.253+00:00\",\n    \"status\": 401,\n    \"error\": \"Unauthorized\",\n    \"path\": \"/api/meter-readings\"\n}"
+						},
+						{
+							"name": "Leituras do medidor com sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}meter-readings",
+									"host": [
+										"{{api_url}}meter-readings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 22:58:39 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"readingId\": 1,\n        \"meter\": {\n            \"meterId\": 1,\n            \"serialNumber\": \"SN1001\",\n            \"installationDate\": \"2025-11-07\"\n        },\n        \"equipment\": {\n            \"id\": 1,\n            \"name\": \"Chiller Principal\",\n            \"location\": \"Climatização\"\n        },\n        \"readingTimestamp\": \"2025-11-05T22:46:21.818214Z\",\n        \"energyKwh\": 1.5,\n        \"powerKw\": 0.5\n    },\n    {\n        \"readingId\": 2,\n        \"meter\": {\n            \"meterId\": 1,\n            \"serialNumber\": \"SN1001\",\n            \"installationDate\": \"2025-11-07\"\n        },\n        \"equipment\": {\n            \"id\": 1,\n            \"name\": \"Chiller Principal\",\n            \"location\": \"Climatização\"\n        },\n        \"readingTimestamp\": \"2025-11-06T22:46:21.818946Z\",\n        \"energyKwh\": 2.1,\n        \"powerKw\": 0.6\n    },\n    {\n        \"readingId\": 3,\n        \"meter\": {\n            \"meterId\": 2,\n            \"serialNumber\": \"SN1002\",\n            \"installationDate\": \"2025-11-07\"\n        },\n        \"equipment\": {\n            \"id\": 2,\n            \"name\": \"Compressor 75\",\n            \"location\": \"Compressão\"\n        },\n        \"readingTimestamp\": \"2025-11-07T16:46:21.819418Z\",\n        \"energyKwh\": 1.8,\n        \"powerKw\": 0.7\n    },\n    {\n        \"readingId\": 4,\n        \"meter\": {\n            \"meterId\": 3,\n            \"serialNumber\": \"SN1003\",\n            \"installationDate\": \"2025-11-07\"\n        },\n        \"equipment\": {\n            \"id\": 3,\n            \"name\": \"Iluminação Externa\",\n            \"location\": \"Pátio\"\n        },\n        \"readingTimestamp\": \"2025-11-07T21:46:21.819908Z\",\n        \"energyKwh\": 33.2,\n        \"powerKw\": 1.2\n    },\n    {\n        \"readingId\": 5,\n        \"meter\": {\n            \"meterId\": 4,\n            \"serialNumber\": \"SN1004\",\n            \"installationDate\": \"2025-11-07\"\n        },\n        \"equipment\": {\n            \"id\": 4,\n            \"name\": \"Bomba de Água\",\n            \"location\": \"Subsolo\"\n        },\n        \"readingTimestamp\": \"2025-11-07T22:46:21.820386Z\",\n        \"energyKwh\": 2.5,\n        \"powerKw\": 0.9\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Incluir leitura no medidor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"meterId\": 1,\r\n  \"equipmentId\": 1,\r\n  \"energyKwh\": 12.34\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}meter-readings",
+							"host": [
+								"{{api_url}}meter-readings"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Inclusão de leitura com sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"meterId\": 1,\r\n  \"equipmentId\": 1,\r\n  \"energyKwh\": 12.34\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}meter-readings",
+									"host": [
+										"{{api_url}}meter-readings"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 00:14:06 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"readingId\": 7,\n    \"meter\": {\n        \"meterId\": 1,\n        \"serialNumber\": \"SN1001\",\n        \"installationDate\": \"2025-11-07\"\n    },\n    \"equipment\": {\n        \"id\": 1,\n        \"name\": \"Chiller Principal\",\n        \"location\": \"Climatização\"\n    },\n    \"readingTimestamp\": \"2025-11-08T00:14:06.887157652Z\",\n    \"energyKwh\": 12.34,\n    \"powerKw\": null\n}"
+						},
+						{
+							"name": "Inclusão de leitura sem autenticação",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"meterId\": 1,\r\n  \"equipmentId\": 1,\r\n  \"energyKwh\": 12.34\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}meter-readings",
+									"host": [
+										"{{api_url}}meter-readings"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "Set-Cookie",
+									"value": "JSESSIONID=D5E74EE22BCDDCB84D102C1BAFDC56D0; Path=/; HttpOnly"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Basic realm=\"Realm\""
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 00:18:52 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-11-08T00:18:52.648+00:00\",\n    \"status\": 401,\n    \"error\": \"Unauthorized\",\n    \"path\": \"/api/meter-readings\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Alertas de pico de consumo",
+			"item": [
+				{
+					"name": "Alertas de pico de consumo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}alerts",
+							"host": [
+								"{{api_url}}alerts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Alertas de pico de consumo com usuário sem autorização",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}alerts",
+									"host": [
+										"{{api_url}}alerts"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Set-Cookie",
+									"value": "JSESSIONID=42202E4333628A4AB353575AAA16B14B; Path=/; HttpOnly"
+								},
+								{
+									"key": "WWW-Authenticate",
+									"value": "Basic realm=\"Realm\""
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 22:59:12 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-11-07T22:59:12.751+00:00\",\n    \"status\": 401,\n    \"error\": \"Unauthorized\",\n    \"path\": \"/api/alerts\"\n}"
+						},
+						{
+							"name": "Alertas de pico de consumo com sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}alerts",
+									"host": [
+										"{{api_url}}alerts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:02:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"alertId\": 1,\n        \"equipment\": {\n            \"id\": 1,\n            \"name\": \"Chiller Principal\",\n            \"location\": \"Climatização\"\n        },\n        \"alertType\": \"CONSUMO\",\n        \"alertMessage\": \"Consumo acima do limite esperado no Chiller Principal.\",\n        \"alertTimestamp\": \"2025-11-07T22:46:21.821369Z\"\n    },\n    {\n        \"alertId\": 2,\n        \"equipment\": {\n            \"id\": 2,\n            \"name\": \"Compressor 75\",\n            \"location\": \"Compressão\"\n        },\n        \"alertType\": \"CONSUMO\",\n        \"alertMessage\": \"Compressor 10 apresentou pico de energia.\",\n        \"alertTimestamp\": \"2025-11-07T22:46:21.822125Z\"\n    },\n    {\n        \"alertId\": 3,\n        \"equipment\": {\n            \"id\": 3,\n            \"name\": \"Iluminação Externa\",\n            \"location\": \"Pátio\"\n        },\n        \"alertType\": \"CONSUMO\",\n        \"alertMessage\": \"Iluminação externa consumindo energia fora do horário.\",\n        \"alertTimestamp\": \"2025-11-07T22:46:21.822936Z\"\n    },\n    {\n        \"alertId\": 4,\n        \"equipment\": {\n            \"id\": 4,\n            \"name\": \"Bomba de Água\",\n            \"location\": \"Subsolo\"\n        },\n        \"alertType\": \"CONSUMO\",\n        \"alertMessage\": \"Bomba de Água com uso prolongado.\",\n        \"alertTimestamp\": \"2025-11-07T22:46:21.823457Z\"\n    },\n    {\n        \"alertId\": 5,\n        \"equipment\": {\n            \"id\": 5,\n            \"name\": \"Servidor TI\",\n            \"location\": \"Data Center\"\n        },\n        \"alertType\": \"CONSUMO\",\n        \"alertMessage\": \"Servidor TI apresentou aumento repentino de carga.\",\n        \"alertTimestamp\": \"2025-11-07T22:46:21.824063Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Incluir alerta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}alerts",
+							"host": [
+								"{{api_url}}alerts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Incluir alerta com sucesso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"equipmentId\": 2,\r\n  \"message\": \"Consumo de energia acima do esperado no circuito principal.\",\r\n  \"type\": \"WARNING\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}alerts",
+									"host": [
+										"{{api_url}}alerts"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 00:06:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"alertId\": 6,\n    \"equipment\": {\n        \"id\": 2,\n        \"name\": \"Compressor 75\",\n        \"location\": \"Compressão\"\n    },\n    \"alertType\": \"WARNING\",\n    \"alertMessage\": \"Consumo de energia acima do esperado no circuito principal.\",\n    \"alertTimestamp\": \"2025-11-08T00:06:23.868219882Z\"\n}"
+						},
+						{
+							"name": "Inclusão sem aparelho existir",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"equipmentId\": 50,\r\n  \"message\": \"Consumo de energia acima do esperado no circuito principal.\",\r\n  \"type\": \"WARNING\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}alerts",
+									"host": [
+										"{{api_url}}alerts"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 08 Nov 2025 00:07:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Equipment not found: 50\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Lista de equipamentos",
+			"item": [
+				{
+					"name": "Lista de equipamentos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Compressor 10\",\r\n  \"location\": \"Bloco B\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}equipment",
+							"host": [
+								"{{api_url}}equipment"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Lista de equipamentos com sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Compressor 10\",\r\n  \"location\": \"Bloco B\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}equipment",
+									"host": [
+										"{{api_url}}equipment"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:04:28 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Chiller Principal\",\n        \"location\": \"Climatização\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Compressor 75\",\n        \"location\": \"Compressão\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Iluminação Externa\",\n        \"location\": \"Pátio\"\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Bomba de Água\",\n        \"location\": \"Subsolo\"\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Servidor TI\",\n        \"location\": \"Data Center\"\n    }\n]"
+						},
+						{
+							"name": "Lista de equipamentos sem autorização",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"name\": \"Compressor 10\",\r\n  \"location\": \"Bloco B\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}equipment",
+									"host": [
+										"{{api_url}}equipment"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "WWW-Authenticate",
+									"value": "Basic realm=\"Realm\""
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:05:29 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-11-07T23:05:29.278+00:00\",\n    \"status\": 401,\n    \"error\": \"Unauthorized\",\n    \"path\": \"/api/equipment\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Incluir equipamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Bomba Hidráulica Thebe\",\r\n    \"location\": \"Compressão\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}equipment",
+							"host": [
+								"{{api_url}}equipment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aparelhos medidores de energia",
+			"item": [
+				{
+					"name": "Aparelhos medidores de energia",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}energy-meter",
+							"host": [
+								"{{api_url}}energy-meter"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Aparelhos medidores de energia com sucesso",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}energy-meter",
+									"host": [
+										"{{api_url}}energy-meter"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:08:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"meterId\": 1,\n        \"serialNumber\": \"SN1001\",\n        \"installationDate\": \"2025-11-07\"\n    },\n    {\n        \"meterId\": 2,\n        \"serialNumber\": \"SN1002\",\n        \"installationDate\": \"2025-11-07\"\n    },\n    {\n        \"meterId\": 3,\n        \"serialNumber\": \"SN1003\",\n        \"installationDate\": \"2025-11-07\"\n    },\n    {\n        \"meterId\": 4,\n        \"serialNumber\": \"SN1004\",\n        \"installationDate\": \"2025-11-07\"\n    },\n    {\n        \"meterId\": 5,\n        \"serialNumber\": \"SN1005\",\n        \"installationDate\": \"2025-11-07\"\n    }\n]"
+						},
+						{
+							"name": "Aparelhos medidores de energia sem autenticação",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}energy-meter",
+									"host": [
+										"{{api_url}}energy-meter"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "WWW-Authenticate",
+									"value": "Basic realm=\"Realm\""
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:08:34 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timestamp\": \"2025-11-07T23:08:34.635+00:00\",\n    \"status\": 401,\n    \"error\": \"Unauthorized\",\n    \"path\": \"/api/energy-meter\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Cadastro aparelhos medidores",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"serialNumber\": \"SN929305\",\r\n    \"installationDate\": \"2025-11-07\"\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}energy-meter",
+							"host": [
+								"{{api_url}}energy-meter"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Input correto - aparelhos medidores",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"serialNumber\": \"SN929305\",\r\n    \"installationDate\": \"2025-11-07\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}energy-meter",
+									"host": [
+										"{{api_url}}energy-meter"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:26:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"meterId\": 6,\n    \"serialNumber\": \"SN929305\",\n    \"installationDate\": \"2025-11-07\"\n}"
+						},
+						{
+							"name": "Input errado de aparelho medidor",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"teste 1\": \"SN929305\",\r\n    \"aparelho subsolo\": \"2025-11-07\"\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}energy-meter",
+									"host": [
+										"{{api_url}}energy-meter"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:29:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"could not execute statement [ORA-01400: cannot insert NULL into (\\\"SYSTEM\\\".\\\"ENERGY_METER\\\".\\\"SERIAL_NUMBER\\\")\\n] [insert into energy_meter (installation_date,serial_number,meter_id) values (?,?,default)]; SQL [insert into energy_meter (installation_date,serial_number,meter_id) values (?,?,default)]; constraint [null]\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Excluir aparelho medidor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}energy-meter/:id",
+							"host": [
+								"{{api_url}}energy-meter"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Erro ao excluir aparelho com medição feita",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}energy-meter/:id",
+									"host": [
+										"{{api_url}}energy-meter"
+									],
+									"path": [
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:33:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"could not execute statement [ORA-02292: integrity constraint (SYSTEM.FK_METER) violated - child record found\\n] [delete from energy_meter where meter_id=?]; SQL [delete from energy_meter where meter_id=?]; constraint [SYSTEM.FK_METER]\"\n}"
+						},
+						{
+							"name": "Exclusão de aparelho sem medição",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}energy-meter/:id",
+									"host": [
+										"{{api_url}}energy-meter"
+									],
+									"path": [
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "8"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Length",
+									"value": "0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 07 Nov 2025 23:35:43 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "123",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

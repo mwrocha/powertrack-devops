@@ -1,68 +1,77 @@
-#services:
-#  oracle-db:
-#    image: gvenzl/oracle-xe:18.4.0
-#    environment:
-#      ORACLE_PASSWORD: 12345
-#      ORACLE_PDB: XEPDB1
-#    ports:
-#      - "1521:1521"
-#    volumes:
-#      - oracle-data:/opt/oracle/oradata
-#    healthcheck:
-#      test: ["CMD", "sqlplus", "-s", "system/12345@//localhost:1521/XEPDB1", "<<<", "SELECT 1 FROM DUAL;"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 5
-#    restart: unless-stopped
-#
-#  powertrack-app:
-#    build: .
-#    environment:
-#      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle-db:1521/XEPDB1
-#      SPRING_DATASOURCE_USERNAME: system
-#      SPRING_DATASOURCE_PASSWORD: 12345
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      oracle-db:
-#        condition: service_healthy
-#
-#volumes:
-#  oracle-data:
+# ============================================================
+# PowerTrack - Docker Compose
+# Orquestra: App (Spring Boot) + MongoDB
+# Ambientes: staging e produção via profiles
+# ============================================================
 
 version: '3.8'
 
 services:
-  oracle-db:
-    image: gvenzl/oracle-xe:18.4.0
+
+  # ─────────────────────────────
+  # Banco de Dados - MongoDB
+  # ─────────────────────────────
+  mongodb:
+    image: mongo:7.0
+    container_name: powertrack-mongodb
+    restart: unless-stopped
     environment:
-      ORACLE_PASSWORD: 12345
-      ORACLE_PDB: XEPDB1
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-powertrack}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-powertrack123}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-powertrack}
     ports:
-      - "1521:1521"
+      - "27017:27017"
     volumes:
-      - oracle-data:/opt/oracle/oradata
+      - mongo-data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - powertrack-network
     healthcheck:
-      test: ["CMD-SHELL", "echo 'SELECT 1 FROM DUAL;' | sqlplus -s system/12345@//localhost:1521/XEPDB1"]
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 30s
       timeout: 10s
       retries: 5
-    restart: unless-stopped
+      start_period: 30s
 
+  # ─────────────────────────────
+  # Aplicação - PowerTrack
+  # ─────────────────────────────
   powertrack-app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: powertrack-app
+    restart: unless-stopped
     environment:
-      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle-db:1521/XEPDB1
-      SPRING_DATASOURCE_USERNAME: system
-      SPRING_DATASOURCE_PASSWORD: 12345
-      SPRING_FLYWAY_ENABLED: "true"
-      SPRING_FLYWAY_LOCATIONS: classpath:db/migration
-      SPRING_FLYWAY_BASELINE_ON_MIGRATE: "true"
+      SPRING_PROFILES_ACTIVE: ${APP_PROFILE:-staging}
+      SPRING_DATA_MONGODB_URI: mongodb://${MONGO_USERNAME:-powertrack}:${MONGO_PASSWORD:-powertrack123}@mongodb:27017/${MONGO_DATABASE:-powertrack}?authSource=admin
+      SPRING_DATA_MONGODB_DATABASE: ${MONGO_DATABASE:-powertrack}
+      SPRING_DATA_MONGODB_AUTO_INDEX_CREATION: "true"
+      APP_ENV: ${APP_PROFILE:-staging}
     ports:
-      - "8080:8080"
+      - "${APP_PORT:-8080}:8080"
     depends_on:
-      oracle-db:
+      mongodb:
         condition: service_healthy
+    networks:
+      - powertrack-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
+# ─────────────────────────────
+# Volumes
+# ─────────────────────────────
 volumes:
-  oracle-data:
+  mongo-data:
+    driver: local
+
+# ─────────────────────────────
+# Redes
+# ─────────────────────────────
+networks:
+  powertrack-network:
+    driver: bridge

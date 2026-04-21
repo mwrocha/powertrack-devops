@@ -1,0 +1,18 @@
+# ============================================================
+# PowerTrack - Override para ambiente STAGING
+# Uso: docker-compose -f docker-compose.yml -f docker-compose.staging.yml up
+# ============================================================
+
+version: '3.8'
+
+services:
+  powertrack-app:
+    container_name: powertrack-staging
+    environment:
+      SPRING_PROFILES_ACTIVE: staging
+      APP_ENV: staging
+    ports:
+      - "8080:8080"
+
+  mongodb:
+    container_name: powertrack-mongodb-staging

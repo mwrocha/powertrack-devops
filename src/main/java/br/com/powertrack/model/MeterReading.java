@@ -1,57 +1,51 @@
 package br.com.powertrack.model;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.OffsetDateTime;
 
-@Entity
-@Table(name = "METER_READING")
+@Document(collection = "meter_readings")
 public class MeterReading {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "READING_ID")
-    private Long readingId;
+    private String id; // ObjectId do Mongo
 
-    @ManyToOne
-    @JoinColumn(name = "METER_ID")
-    private EnergyMeter meter;
+    // Referências simples (sem join)
+    private String meterId;
+    private String equipmentId;
 
-    @ManyToOne
-    @JoinColumn(name = "EQUIPMENT_ID")
-    private Equipment equipment;
-
-    @Column(name = "READING_TIMESTAMP")
     private OffsetDateTime readingTimestamp;
 
-    @Column(name = "ENERGY_KWH")
     private Double energyKwh;
-
-    @Column(name = "POWER_KW")
     private Double powerKw;
 
+    // Campo opcional para mostrar flexibilidade (ótimo para o trabalho)
+    private String source; // "IOT", "MANUAL", "SIMULATED"
+
     // Getters e Setters
-    public Long getReadingId() {
-        return readingId;
+    public String getId() {
+        return id;
     }
 
-    public void setReadingId(Long readingId) {
-        this.readingId = readingId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public EnergyMeter getMeter() {
-        return meter;
+    public String getMeterId() {
+        return meterId;
     }
 
-    public void setMeter(EnergyMeter meter) {
-        this.meter = meter;
+    public void setMeterId(String meterId) {
+        this.meterId = meterId;
     }
 
-    public Equipment getEquipment() {
-        return equipment;
+    public String getEquipmentId() {
+        return equipmentId;
     }
 
-    public void setEquipment(Equipment equipment) {
-        this.equipment = equipment;
+    public void setEquipmentId(String equipmentId) {
+        this.equipmentId = equipmentId;
     }
 
     public OffsetDateTime getReadingTimestamp() {
@@ -76,5 +70,13 @@ public class MeterReading {
 
     public void setPowerKw(Double powerKw) {
         this.powerKw = powerKw;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

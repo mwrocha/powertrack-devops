@@ -18,24 +18,31 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository repo) {
-        return username -> repo.findByUsername(username)
-                .map(u -> User.withUsername(u.getUsername())
-                        .password(u.getPassword()) // senha direta, sem criptografia
-                        .roles(u.getRole())
-                        .build())
-                .orElseThrow(() -> new RuntimeException("User not found: " + username));
+        return username -> {
+            System.out.println("Buscando usuário: " + username);
+            try {
+                var user = repo.findByUsername(username);
+                System.out.println("Resultado: " + user);
+                return user.map(u -> {
+                    System.out.println("Role: " + u.getRole());
+                    return User.withUsername(u.getUsername())
+                            .password(u.getPassword())
+                            .authorities("ROLE_" + u.getRole())
+                            .build();
+                }).orElseThrow(() -> new RuntimeException("User not found: " + username));
+            } catch (Exception e) {
+                System.out.println("ERRO: " + e.getMessage());
+                e.printStackTrace();
+                throw e;
+            }
+        };
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**", "/h2-console/**").permitAll()
-                        .requestMatchers("/api/meter-readings/**").authenticated()
-                        .requestMatchers("/api/energy-meter/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/equipment/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/alerts/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
         return http.build();
@@ -43,7 +50,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // senha comum 123
-        return NoOpPasswordEncoder.getInstance();
+        return NoOpPasswordEncoder.getInstance(); // só para teste acadêmico
     }
 }

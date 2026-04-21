@@ -16,17 +16,25 @@ public class AlertService {
         this.repo = repo;
     }
 
-    public Alert create(Alert a) {
-        // Garante que o timestamp será preenchido
-        if (a.getAlertTimestamp() == null) {
-            a.setAlertTimestamp(OffsetDateTime.now());
+    public Alert create(Alert alert) {
+
+        // Garante que o timestamp sempre será preenchido
+        if (alert.getAlertTimestamp() == null) {
+            alert.setAlertTimestamp(OffsetDateTime.now());
         }
-        return repo.save(a);
+
+        return repo.save(alert);
     }
 
     public List<Alert> listAll() {
         return repo.findAll();
     }
 
+    public List<Alert> findByEquipment(String equipmentId) {
+        return repo.findByEquipmentId(equipmentId);
+    }
 
+    public void delete(String id) {
+        repo.deleteById(id);
+    }
 }

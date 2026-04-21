@@ -2,7 +2,6 @@ package br.com.powertrack.controller;
 
 import br.com.powertrack.model.EnergyMeter;
 import br.com.powertrack.service.EnergyMeterService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +10,11 @@ import java.util.List;
 @RequestMapping("/api/energy-meter")
 public class EnergyMeterController {
 
-    @Autowired
-    private EnergyMeterService energyMeterService;
+    private final EnergyMeterService energyMeterService;
+
+    public EnergyMeterController(EnergyMeterService energyMeterService) {
+        this.energyMeterService = energyMeterService;
+    }
 
     @GetMapping
     public List<EnergyMeter> getAll() {
@@ -20,7 +22,7 @@ public class EnergyMeterController {
     }
 
     @GetMapping("/{id}")
-    public EnergyMeter getById(@PathVariable Long id) {
+    public EnergyMeter getById(@PathVariable String id) { // 🔥 agora String
         return energyMeterService.getById(id);
     }
 
@@ -30,12 +32,12 @@ public class EnergyMeterController {
     }
 
     @PutMapping("/{id}")
-    public EnergyMeter update(@PathVariable Long id, @RequestBody EnergyMeter energyMeter) {
+    public EnergyMeter update(@PathVariable String id, @RequestBody EnergyMeter energyMeter) { // 🔥 String
         return energyMeterService.update(id, energyMeter);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable String id) { // 🔥 String
         energyMeterService.delete(id);
     }
 }

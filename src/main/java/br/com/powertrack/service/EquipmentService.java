@@ -8,12 +8,27 @@ import java.util.List;
 
 @Service
 public class EquipmentService {
-    private final EquipmentRepository repo;
-    public EquipmentService(EquipmentRepository repo) { this.repo = repo; }
 
-    public List<Equipment> listAll() { return repo.findAll(); }
-    public Equipment create(Equipment e) { return repo.save(e); }
-    public Equipment findById(Long id) {
-        return repo.findById(id).orElseThrow(() -> new RuntimeException("Equipamento não encontrado: " + id));
+    private final EquipmentRepository repo;
+
+    public EquipmentService(EquipmentRepository repo) {
+        this.repo = repo;
+    }
+
+    public List<Equipment> listAll() {
+        return repo.findAll();
+    }
+
+    public Equipment create(Equipment equipment) {
+        return repo.save(equipment);
+    }
+
+    public Equipment findById(String id) { // 🔥 era Long
+        return repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Equipamento não encontrado: " + id));
+    }
+
+    public void delete(String id) {
+        repo.deleteById(id);
     }
 }

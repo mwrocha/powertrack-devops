@@ -32,7 +32,9 @@ public class AlertController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> create(@RequestBody Map<String, Object> payload) {
-        Long equipmentId = Long.valueOf(payload.get("equipmentId").toString());
+
+        // Mongo: id é String (ObjectId)
+        String equipmentId = payload.get("equipmentId").toString();
         String message = payload.get("message").toString();
         String type = payload.containsKey("type") ? payload.get("type").toString() : "INFO";
 
@@ -40,7 +42,7 @@ public class AlertController {
                 .orElseThrow(() -> new RuntimeException("Equipment not found: " + equipmentId));
 
         Alert alert = new Alert();
-        alert.setEquipment(eq);
+        alert.setEquipmentId(eq.getId()); // referência simples
         alert.setAlertMessage(message);
         alert.setAlertType(type);
         alert.setAlertTimestamp(OffsetDateTime.now());

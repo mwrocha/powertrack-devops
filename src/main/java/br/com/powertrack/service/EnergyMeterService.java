@@ -2,7 +2,6 @@ package br.com.powertrack.service;
 
 import br.com.powertrack.model.EnergyMeter;
 import br.com.powertrack.repository.EnergyMeterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,14 +9,17 @@ import java.util.List;
 @Service
 public class EnergyMeterService {
 
-    @Autowired
-    private EnergyMeterRepository repository;
+    private final EnergyMeterRepository repository;
+
+    public EnergyMeterService(EnergyMeterRepository repository) {
+        this.repository = repository;
+    }
 
     public List<EnergyMeter> getAll() {
         return repository.findAll();
     }
 
-    public EnergyMeter getById(Long id) {
+    public EnergyMeter getById(String id) { // 🔥 era Long
         return repository.findById(id).orElse(null);
     }
 
@@ -25,7 +27,7 @@ public class EnergyMeterService {
         return repository.save(meter);
     }
 
-    public EnergyMeter update(Long id, EnergyMeter updated) {
+    public EnergyMeter update(String id, EnergyMeter updated) { // 🔥 era Long
         EnergyMeter existing = getById(id);
         if (existing != null) {
             existing.setSerialNumber(updated.getSerialNumber());
@@ -35,7 +37,7 @@ public class EnergyMeterService {
         return null;
     }
 
-    public void delete(Long id) {
+    public void delete(String id) { // 🔥 era Long
         repository.deleteById(id);
     }
 }

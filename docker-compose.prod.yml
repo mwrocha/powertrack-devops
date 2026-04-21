@@ -1,0 +1,20 @@
+# ============================================================
+# PowerTrack - Override para ambiente PRODUÇÃO
+# Uso: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+# ============================================================
+
+version: '3.8'
+
+services:
+  powertrack-app:
+    container_name: powertrack-producao
+    environment:
+      SPRING_PROFILES_ACTIVE: production
+      APP_ENV: production
+    ports:
+      - "80:8080"
+    restart: always
+
+  mongodb:
+    container_name: powertrack-mongodb-producao
+    restart: always
