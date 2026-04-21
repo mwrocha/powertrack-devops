@@ -63,7 +63,7 @@ jobs:
       - name: Health Check Staging
         run: |
           sleep 40
-          curl -f http://localhost:8080/actuator/health
+          curl -u admin:123 -f http://localhost:8080/actuator/health
 
   deploy-producao:
     name: Deploy Producao
@@ -91,4 +91,4 @@ jobs:
       - name: Health Check Producao
         run: |
           sleep 40
-          curl -f http://localhost:80/actuator/health
+          curl -u admin:123 -f http://localhost:80/actuator/health
