@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AlertList",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "equipmentId", "alertMessage", "alertType"],
+    "properties": {
+      "id": { "type": "string" },
+      "equipmentId": { "type": "string" },
+      "alertType": { "type": "string" },
+      "alertMessage": { "type": "string" },
+      "alertTimestamp": { "type": ["string", "null"] }
+    }
+  }
+}
