@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EquipmentList",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "name", "location"],
+    "properties": {
+      "id": { "type": "string" },
+      "name": { "type": "string" },
+      "location": { "type": "string" }
+    },
+    "additionalProperties": false
+  }
+}
