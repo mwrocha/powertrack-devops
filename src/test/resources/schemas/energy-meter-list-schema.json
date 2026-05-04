@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EnergyMeterList",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "serialNumber"],
+    "properties": {
+      "id": { "type": "string" },
+      "serialNumber": { "type": "string" },
+      "installationDate": { "type": ["string", "null"] }
+    }
+  }
+}
