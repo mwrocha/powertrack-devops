@@ -1,0 +1,12 @@
+package br.com.powertrack.bdd;
+
+import org.junit.platform.suite.api.*;
+
+@Suite
+@IncludeEngines("cucumber")
+@SelectClasspathResource("features")
+@ConfigurationParameter(key = "cucumber.plugin", value = "pretty, html:target/cucumber-reports/report.html, json:target/cucumber-reports/report.json")
+@ConfigurationParameter(key = "cucumber.glue", value = "br.com.powertrack.bdd")
+@ConfigurationParameter(key = "cucumber.filter.tags", value = "not @ignore")
+public class CucumberTestRunner {
+}
