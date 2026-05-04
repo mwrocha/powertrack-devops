@@ -207,6 +207,36 @@ Pipeline com 3 stages executados com sucesso: Build e Testes → Deploy Staging 
 
 ---
 
+## Testes BDD — Cucumber
+
+### Ferramentas utilizadas
+- **Cucumber 7.18.0** — BDD com Gherkin em português
+- **REST Assured** — Testes de API (status code + corpo JSON)
+- **JSON Schema Validator** — Validação de contrato
+- **Flapdoodle Embed MongoDB** — MongoDB em memória para testes
+
+### Como executar os testes
+
+```bash
+mvn test
+```
+
+### Cenários implementados
+
+| Feature | Cenários | Tipos |
+|---------|----------|-------|
+| Equipment | 3 | Listar ✅, Criar ✅, Sem auth 401 ✅ |
+| Energy Meter | 3 | Listar ✅, Criar ✅, Sem auth 401 ✅ |
+| Meter Reading | 4 | Listar ✅, Criar ✅, Por equipamento ✅, Sem auth 401 ✅ |
+| Alert | 4 | Listar ✅, Criar ✅, Criar sem auth 401 ✅, Listar sem auth 401 ✅ |
+
+### Resultado da execução
+
+```
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0 — BUILD SUCCESS
+```
+
+
 ## Checklist de Entrega
 
 | Item | Status |
@@ -218,3 +248,5 @@ Pipeline com 3 stages executados com sucesso: Build e Testes → Deploy Staging 
 | README.md com instruções e prints | ✅ |
 | Documentação técnica com evidências (PDF) | ✅ |
 | Deploy realizado nos ambientes staging e produção | ✅ |
+| Testes BDD com Cucumber (14 cenários Gherkin) | ✅ |
+| Validação de JSON Schema para todas as APIs | ✅ |
