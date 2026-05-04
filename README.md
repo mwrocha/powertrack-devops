@@ -225,7 +225,7 @@ mvn test
 
 | Feature | Cenários | Tipos |
 |---------|----------|-------|
-| Equipment | 3 | Listar ✅, Criar ✅, Sem auth 401 ✅ |
+| Equipment | 3 | Listar , Criar , Sem auth 401  |
 | Energy Meter | 3 | Listar ✅, Criar ✅, Sem auth 401 ✅ |
 | Meter Reading | 4 | Listar ✅, Criar ✅, Por equipamento ✅, Sem auth 401 ✅ |
 | Alert | 4 | Listar ✅, Criar ✅, Criar sem auth 401 ✅, Listar sem auth 401 ✅ |
