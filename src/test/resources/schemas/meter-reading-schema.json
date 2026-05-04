@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MeterReading",
+  "type": "object",
+  "required": ["id", "meterId", "equipmentId", "energyKwh"],
+  "properties": {
+    "id": { "type": "string" },
+    "meterId": { "type": "string" },
+    "equipmentId": { "type": "string" },
+    "energyKwh": { "type": "number" },
+    "powerKw": { "type": ["number", "null"] },
+    "readingTimestamp": { "type": ["string", "null"] },
+    "source": { "type": ["string", "null"] }
+  }
+}
