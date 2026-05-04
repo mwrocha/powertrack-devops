@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Equipment",
+  "type": "object",
+  "required": ["id", "name", "location"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "MongoDB ObjectId do equipamento"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nome do equipamento"
+    },
+    "location": {
+      "type": "string",
+      "description": "Localização do equipamento"
+    }
+  },
+  "additionalProperties": false
+}
