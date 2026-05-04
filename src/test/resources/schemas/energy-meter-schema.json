@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EnergyMeter",
+  "type": "object",
+  "required": ["id", "serialNumber"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "MongoDB ObjectId do medidor"
+    },
+    "serialNumber": {
+      "type": "string",
+      "description": "Número de série do medidor"
+    },
+    "installationDate": {
+      "type": ["string", "null"],
+      "description": "Data de instalação"
+    }
+  }
+}
